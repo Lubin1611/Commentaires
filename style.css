@@ -1,0 +1,27 @@
+form {
+
+    text-align: center;
+    border: 1px solid black;
+    width: 50%;
+    margin-left: 24%;
+}
+
+h1 {
+
+    text-align: center;
+
+}
+
+.affichage {
+
+    width: 70%;
+
+    margin-left: 15%;
+    margin-top: 5%;
+}
+
+.encart {
+
+    border: 1px solid black;
+
+}
