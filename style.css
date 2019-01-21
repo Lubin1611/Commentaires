@@ -1,7 +1,12 @@
+body {
+
+    font-family: "Noto Sans";
+}
+
 form {
 
     text-align: center;
-    border: 1px solid black;
+    border: 1px outset black;
     width: 50%;
     margin-left: 24%;
 }
@@ -22,6 +27,36 @@ h1 {
 
 .encart {
 
-    border: 1px solid black;
+   box-shadow: 2px 2px 2px 1px rgba(0, 0, 255, .2);
+    padding: 1%;
+    background-color: darkred;
+    color: white;
 
+
+}
+
+.encart2 {
+
+    box-shadow: 2px 2px 2px 1px rgba(0, 0, 255, .2);
+    padding: 1%;
+}
+
+#styleIndex {
+    background-color: darkred;
+    color: white;
+    padding: 1%;
+    border-radius: 10px;
+}
+
+a {
+
+    background-color: grey;
+    color: white;
+    padding: 1%;
+    border-radius: 10px;
+}
+
+input {
+
+    margin: 2%;
 }

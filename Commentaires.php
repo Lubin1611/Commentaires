@@ -7,9 +7,9 @@
  */
 
 $servername = "localhost";
-$username = "root";
-$password = "";
-$dbname = "espace_commentaires";
+$username = "id7331055_lubin";
+$password = "########";
+$dbname = "id7331055_nibul";
 
 $conn = new mysqli($servername, $username, $password);
 
@@ -21,12 +21,29 @@ if ($conn->connect_error) {
 } else {
 
     $conn->select_db($dbname);
-   
+
 
 }
 
+$query = "SELECT COUNT(id) as nbMessage FROM `user2`";
 
-$ajoutEl = "INSERT INTO `user` (`nom`, `prenom`, `commentaire`, `date`) VALUES (?, ?, ?, NOW())";
+$resultatM = $conn->query($query);
+
+$data = $resultatM->fetch_assoc();
+
+$total = $data['nbMessage'];
+
+///print_r($total);
+
+
+
+$parPage = 4;
+$nbPage = ceil($total / $parPage);
+$pageCourante = 1;
+
+
+
+$ajoutEl = "INSERT INTO `user2` (`nom`, `prenom`, `commentaire`, `date`) VALUES (?, ?, ?, NOW())";
 
 
 if (isset($_POST['nom']) and isset($_POST['prenom']) and isset($_POST['commentaires'])) {
@@ -51,10 +68,21 @@ if (isset($_POST['nom']) and isset($_POST['prenom']) and isset($_POST['commentai
 
 function afficheCom()
 {
-
+    global $parPage;
     global $conn;
+    global $pageCourante;
+    global $nbPage;
 
-    $tout = "SELECT * FROM `user` ORDER BY `id` DESC LIMIT 0, 5";
+    if(isset($_GET['page']) and $_GET['page']>0 and $_GET['page']<= $nbPage ) {
+
+        $pageCourante = $_GET['page'];
+
+    } else {
+
+        $pageCourante = 1;
+    }
+
+    $tout = "SELECT * FROM `user2` ORDER BY `id` DESC LIMIT " . (($pageCourante - 1) * $parPage) . ", $parPage";
 
     $result = $conn->query($tout);
 
@@ -62,11 +90,27 @@ function afficheCom()
 
     while ($row = $result->fetch_assoc()) {
 
-        echo "<p class = 'encart'>" .$row['nom']. " " .  $row['prenom']." le ". $row['date']."</p>";
-        echo "<p>" .$row['commentaire']. "</p>";
+        echo "<p class = 'encart'>" . $row['nom'] . " " . $row['prenom'] . " le " . $row['date'] . "</p>";
+        echo "<p class = 'encart2'>" . $row['commentaire'] . "</p>";
     }
     echo '</div>';
+
+    for ($i = 1; $i <= $nbPage; $i++) {
+
+        if ($i == $pageCourante) {
+
+            echo "<span id = 'styleIndex'>" .$i. "</span>";
+
+        } else {
+
+            echo "<a href=\"Commentaires.php?page=$i\">$i</a>";
+
+        }
+
+    }
+
 }
+
 
 ?>
 
@@ -89,10 +133,10 @@ function afficheCom()
     <input type="submit" value="Envoyez">
 </form>
 
-<div class ="affichage">
+<div class="affichage">
 
-    <?=afficheCom();?>
-    <a href="commentaires2.php">Suivant</a>
+    <?= afficheCom(); ?>
+
 </div>
 
 </body>
